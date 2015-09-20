@@ -1,13 +1,8 @@
 module TinyORM
   module Query
     class Base
-      def initialize(query = nil)
-        @query = query || {
-            select: '',
-            where: [],
-            join: '',
-            group: ''
-        }
+      def initialize(query)
+        @query = query
       end
 
       def where(options = {})

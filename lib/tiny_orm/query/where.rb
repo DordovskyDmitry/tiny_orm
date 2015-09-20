@@ -1,7 +1,7 @@
 module TinyORM
   module Query
     class Where < Base
-      class Condition < Struct.new(:options)
+      class Condition < Struct.new(:table_name, :options)
         def compile!
           if options.is_a?(String)
             "(#{options})"
@@ -17,11 +17,11 @@ module TinyORM
         def combine(delimiter = '=')
           options.map do |k, v|
             if v.nil?
-              "#{k} IS NULL"
+              "#{table_name}.#{k} IS NULL"
             elsif v.is_a?(String)
-              "#{k} #{delimiter} '#{v}'"
+              "#{table_name}.#{k} #{delimiter} '#{v}'"
             else
-              "#{k} #{delimiter} #{v}"
+              "#{table_name}.#{k} #{delimiter} #{v}"
             end
           end.join(' AND ')
         end
@@ -63,7 +63,7 @@ module TinyORM
 
       %w(not and or like).each do |method|
         define_method method do |options|
-          @conditions << Object.const_get("TinyORM::Query::Where::#{method.capitalize}").new(options)
+          @conditions << Object.const_get("TinyORM::Query::Where::#{method.capitalize}").new(@query[:table_name], options)
           self
         end
       end
