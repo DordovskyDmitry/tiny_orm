@@ -4,7 +4,7 @@ module TinyORM
       class Condition < Struct.new(:options)
         def compile!
           if options.is_a?(String)
-            options
+            "(#{options})"
           elsif options.is_a?(Hash)
             build_sql
           else
@@ -39,13 +39,13 @@ module TinyORM
 
       class Not < Condition
         def build_sql
-          "not(#{combine})"
+          "NOT(#{combine})"
         end
       end
 
       class Like < Condition
         def build_sql
-          "(#{combine('like')})"
+          "(#{combine('LIKE')})"
         end
       end
 
