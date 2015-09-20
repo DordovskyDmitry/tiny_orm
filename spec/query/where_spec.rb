@@ -2,7 +2,7 @@ require_relative '../../spec/spec_helper'
 
 describe TinyORM::Query::Where do
 
-  let(:where) { TinyORM::Query::Where.new({ table_name: 'users', select: '', where: [], join: [], group: [] })}
+  let(:where) { TinyORM::Query::Where.new(TinyORM::Query::Container.new('users')) }
 
   context 'and' do
     it { expect(where.and(name: 'john').compile!).to eq("(users.name = 'john')") }
@@ -69,7 +69,7 @@ describe TinyORM::Query::Where do
   end
 
   context 'object as argument' do
-    let(:subwhere) { TinyORM::Query::Where.new({ table_name: 'books', select: '', where: [], join: [], group: [] }) }
+    let(:subwhere) { TinyORM::Query::Where.new(TinyORM::Query::Container.new('books')) }
 
     it { expect(where.and(subwhere.and(name: 'john')).compile!).to eq("(books.name = 'john')") }
     it { expect(where.and(name: 'sam').or(subwhere.and(name: 'john').or(name: 'bob')).compile!).to eq("(users.name = 'sam') OR (books.name = 'john') OR (books.name = 'bob')") }

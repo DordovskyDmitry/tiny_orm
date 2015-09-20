@@ -55,15 +55,15 @@ module TinyORM
         end
       end
 
-      def initialize(query = nil)
+      def initialize(query)
         @conditions = []
-        @query = super
-        @query[:where] << self
+        @query = query
+        @query.where << self
       end
 
       %w(not and or like).each do |method|
         define_method method do |options|
-          @conditions << Object.const_get("TinyORM::Query::Where::#{method.capitalize}").new(@query[:table_name], options)
+          @conditions << Object.const_get("TinyORM::Query::Where::#{method.capitalize}").new(@query.table_name, options)
           self
         end
       end

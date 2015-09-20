@@ -1,6 +1,5 @@
-require "tiny_orm/version"
-require 'tiny_orm/query/base'
-require 'tiny_orm/query/where'
+require 'tiny_orm/version'
+Dir[File.dirname(__FILE__) + '/tiny_orm/**/*.rb'].each { |file| require file }
 
 module TinyORM
   class Base
@@ -10,18 +9,18 @@ module TinyORM
       end
     end
 
-    def self.where(options = {})
-      TinyORM::Query::Base.new(query_struct).where(options)
+    def self.method_missing(name, *args)
+      query_obj = TinyORM::Query::Base.new(query_struct)
+      query_obj.respond_to?(name) ? query_obj.send(name, *args) : super
+    end
+
+    def self.respond_to_missing?(name, include_private = false)
+      TinyORM::Query::Base.new(query_struct).respond_to?(name) || super
     end
 
     def self.query_struct
-      {
-          table_name: table_name,
-          select: '',
-          where: [],
-          join: [],
-          group: []
-      }
+      TinyORM::Query::Container.new(table_name)
     end
+    private_class_method :query_struct
   end
 end
