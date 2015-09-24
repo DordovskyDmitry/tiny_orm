@@ -10,28 +10,17 @@ module TinyORM
         # connection.execute(query_string)
       end
 
-      def where(options = {})
-        self.is_a?(Where) ? self.and(options) : Where.new(@query).and(options)
+      %w(where having).each do |method|
+        define_method method do |options = {}|
+          klass = Object.const_get("TinyORM::Query::#{method.capitalize}")
+          self.is_a?(klass) ? self.and(options) : klass.new(@query).and(options)
+        end
       end
 
-      def having(options = {})
-        self.is_a?(Having) ? self.and(options) : Having.new(@query).and(options)
-      end
-
-      def join(table)
-        Join.new(@query).set(table)
-      end
-
-      def group(expression)
-        Group.new(@query).set(expression)
-      end
-
-      def limit(quantity)
-        Limit.new(@query).set(quantity)
-      end
-
-      def offset(quantity)
-        Limit.new(@query).set(quantity)
+      %w(join group limit offset).each do |method|
+        define_method method do |value|
+          Object.const_get("TinyORM::Query::#{method.capitalize}").new(@query).set(value)
+        end
       end
 
       def count
