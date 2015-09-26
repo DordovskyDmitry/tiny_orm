@@ -2,14 +2,12 @@ module TinyORM
   module Query
     class Container
       attr_reader :table_name
-      attr_accessor :select, :where, :join, :group, :limit, :offset, :group, :having
+      attr_accessor :select, :where, :join, :order, :limit, :offset, :group, :having
 
       def initialize(table_name)
         @table_name = table_name
-        @select = ''
         @where = []
         @join = []
-        @group = []
         @having = []
       end
 

@@ -2,7 +2,7 @@ require_relative '../../spec/spec_helper'
 
 describe TinyORM::Query::Where do
 
-  let(:where) { TinyORM::Query::Where.new(TinyORM::Query::Container.new('users')) }
+  let(:where) { described_class.new(TinyORM::Query::Container.new('users')) }
 
   context 'and' do
     it { expect(where.and(name: 'john').compile!).to eq("(users.name = 'john')") }
