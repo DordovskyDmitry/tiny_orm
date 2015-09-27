@@ -10,6 +10,10 @@ module TinyORM
         # connection.execute(query_string)
       end
 
+      def to_sql
+        @query.compile!
+      end
+
       %w(where having).each do |method|
         define_method method do |options = {}|
           klass = Object.const_get("TinyORM::Query::#{method.capitalize}")
@@ -17,9 +21,9 @@ module TinyORM
         end
       end
 
-      %w(select join group limit offset).each do |method|
-        define_method method do |value|
-          Object.const_get("TinyORM::Query::#{method.capitalize}").new(@query).set(value)
+      %w(select join group order limit offset).each do |method|
+        define_method method do |*value|
+          Object.const_get("TinyORM::Query::#{method.capitalize}").new(@query).set(*value)
         end
       end
 
