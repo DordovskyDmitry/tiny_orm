@@ -17,7 +17,7 @@ module TinyORM
         end
       end
 
-      %w(join group limit offset).each do |method|
+      %w(select join group limit offset).each do |method|
         define_method method do |value|
           Object.const_get("TinyORM::Query::#{method.capitalize}").new(@query).set(value)
         end
