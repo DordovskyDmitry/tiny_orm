@@ -5,7 +5,7 @@ require 'tiny_orm/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "tiny_orm"
-  spec.version       = TinyOrm::VERSION
+  spec.version       = TinyORM::VERSION
   spec.authors       = ["dd"]
   spec.email         = ["dordovskydmitry@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}

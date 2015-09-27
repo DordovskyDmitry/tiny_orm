@@ -1,5 +1,5 @@
 require "tiny_orm/version"
 
-module TinyOrm
+module TinyORM
   # Your code goes here...
 end

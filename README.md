@@ -1,4 +1,4 @@
-# TinyOrm
+# TinyORM
 
 TODO: Write a gem description
 
