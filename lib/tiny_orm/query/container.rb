@@ -5,7 +5,7 @@ module TinyORM
       attr_accessor :select, :where, :join, :order, :limit, :offset, :group, :having
 
       def initialize(table_name)
-        @table_name = table_name
+        @table_name = table_name.to_s.extend(TinyORM::PluralSingularString)
         @where = []
         @join = []
         @having = []
