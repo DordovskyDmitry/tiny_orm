@@ -7,6 +7,7 @@ module TinyORM
       class << base
         attr_accessor :table_name
       end
+      base.send(:include, TinyORM::Association)
     end
 
     def self.method_missing(name, *args)
@@ -19,7 +20,7 @@ module TinyORM
     end
 
     def self.query_struct
-      TinyORM::Query::Container.new(table_name)
+      TinyORM::Query::Container.new(self)
     end
     private_class_method :query_struct
   end

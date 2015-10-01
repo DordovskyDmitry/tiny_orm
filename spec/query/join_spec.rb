@@ -2,7 +2,7 @@ require_relative '../../spec/spec_helper'
 
 describe TinyORM::Query::Join do
 
-  let(:join) { described_class.new(TinyORM::Query::Container.new('users')) }
+  let(:join) { described_class.new(TinyORM::Query::Container.new(Model.new('users'))) }
 
   it { expect(join.set('LEFT JOIN orders ON users.id = orders.user_id').compile!).to eq('LEFT JOIN orders ON users.id = orders.user_id') }
   it { expect(join.set(:orders).compile!).to eq('INNER JOIN orders ON users.id = orders.user_id') }

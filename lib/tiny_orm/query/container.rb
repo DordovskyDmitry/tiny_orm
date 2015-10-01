@@ -1,14 +1,18 @@
 module TinyORM
   module Query
     class Container
-      attr_reader :table_name
+      attr_reader :model
       attr_accessor :select, :where, :join, :order, :limit, :offset, :group, :having
 
-      def initialize(table_name)
-        @table_name = table_name.to_s.extend(TinyORM::PluralSingularString)
+      def initialize(model)
+        @model = model
         @where = []
         @join = []
         @having = []
+      end
+
+      def table_name
+        model.table_name
       end
 
       def compile!
@@ -33,7 +37,7 @@ SQL
       end
 
       def from_expression
-        "FROM #{table_name}"
+        "FROM #{model.table_name}"
       end
 
       def join_expression
