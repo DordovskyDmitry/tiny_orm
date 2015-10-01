@@ -1,11 +1,5 @@
 require_relative '../spec_helper'
 
-class Profile < TinyORM::Base
-end
-
-class Book < TinyORM::Base
-end
-
 class Photo < TinyORM::Base
   self.table_name = 'photos'
   belongs_to :profile
@@ -22,13 +16,13 @@ class Author < TinyORM::Base
   has_many :books, through: :author_books
 end
 
-class Profile
+class Profile < TinyORM::Base
   self.table_name = 'profiles'
   belongs_to :author
   has_many :photos
 end
 
-class Book
+class Book < TinyORM::Base
   self.table_name = 'books'
   has_many :author_books
   has_many :authors, through: :author_books

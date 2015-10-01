@@ -3,11 +3,7 @@ module TinyORM
     class HasMany < Base
       def initialize(owner, target, options = {})
         super
-        @target ||= begin
-          target_string = target.to_s
-          class_name = target_string.split('_').each{|s| s.extend(TinyORM::PluralSingularString) }.map(&:singularize).map(&:capitalize).join
-          Object.const_get(class_name)
-        end
+        @target
         @through = options[:through]
         @internal_key ||= :id
         @external_key ||= (@through ? :id : :"#{owner.to_s.downcase}_id")
@@ -20,7 +16,7 @@ module TinyORM
 
         owner_to_middle = @owner.associations[@through] || HasMany.new(@owner, @through, internal_key: @internal_key)
         internal_key = "#{@target.to_s.downcase}_id"
-        target_to_middle = through_model.associations[@target.to_s.downcase.to_sym] || HasMany.new(through_model, nil, class:  @target, internal_key: internal_key, external_key: @external_key)
+        target_to_middle = through_model.associations[@target.to_s.downcase.to_sym] || HasMany.new(through_model, nil, class_name:  @target, internal_key: internal_key, external_key: @external_key)
         [owner_to_middle, target_to_middle]
       end
     end
