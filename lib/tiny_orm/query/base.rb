@@ -17,6 +17,10 @@ module TinyORM
         where(conditions).update(attributes)
       end
 
+      def insert(options)
+        Insert.new(model, options).execute
+      end
+
       private
 
       def build_get_query
