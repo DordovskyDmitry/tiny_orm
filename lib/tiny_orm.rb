@@ -1,5 +1,6 @@
 require 'tiny_orm/version'
-Dir[File.dirname(__FILE__) + '/tiny_orm/**/*.rb'].each { |file| require file }
+require 'tiny_orm/query/get/get'
+Dir[File.dirname(__FILE__) + '/tiny_orm/**/**/*.rb'].each { |file| require file }
 
 module TinyORM
   class Base

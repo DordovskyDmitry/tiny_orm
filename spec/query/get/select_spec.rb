@@ -1,8 +1,8 @@
-require_relative '../spec_helper'
+require_relative '../../spec_helper'
 
 describe TinyORM::Query::Select do
 
-  let(:select) { described_class.new(TinyORM::Query::Container.new(Model.new('products'))) }
+  let(:select) { described_class.new(TinyORM::Query::Get::Container.new(Model.new('products'))) }
 
   it { expect(select.set(:price).compile!).to eq('products.price') }
   it { expect(select.set('price, size').compile!).to eq('price, size') }

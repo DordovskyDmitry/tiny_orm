@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Order < Base
+    class Order < Get
       def set(*value)
         @value = *value
         @query.order = self

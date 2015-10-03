@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Where < Base
+    class Where < Get
       class Condition < Struct.new(:table_name, :options)
         def compile!
           if options.is_a?(String)

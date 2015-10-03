@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Select < Base
+    class Select < Get
       def set(*value)
         @value = *value
         @query.select = self

@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require_relative '../../spec_helper'
 
 class Photo < TinyORM::Base
   self.table_name = 'photos'
@@ -30,7 +30,7 @@ end
 
 describe TinyORM::Query::Join do
 
-  let(:join) { described_class.new(TinyORM::Query::Container.new(Author)) }
+  let(:join) { described_class.new(TinyORM::Query::Get::Container.new(Author)) }
 
   it { expect(join.set('LEFT JOIN orders ON authors.id = orders.author_id').compile!).to eq('LEFT JOIN orders ON authors.id = orders.author_id') }
   it { expect(join.set(:inner, :profile).compile!).to eq('INNER JOIN profiles ON authors.id = profiles.author_id') }

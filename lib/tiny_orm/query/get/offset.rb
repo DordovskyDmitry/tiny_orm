@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Offset < Base
+    class Offset < Get
       def set(value)
         @value = value
         @query.offset = self

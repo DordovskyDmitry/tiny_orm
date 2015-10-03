@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Group < Base
+    class Group < Get
       def set(*value)
         @value = *value
         @query.group = self

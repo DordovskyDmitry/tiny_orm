@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Limit < Base
+    class Limit < Get
       def set(value)
         @value = value
         @query.limit = self

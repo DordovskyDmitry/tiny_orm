@@ -1,25 +1,21 @@
-require_relative '../spec_helper'
-
-class Friend  < TinyORM::Base
-
-end
+require_relative '../../spec_helper'
 
 class User < TinyORM::Base
   self.table_name = 'users'
   has_many :friends
 end
 
-class Friend
+class Friend < TinyORM::Base
   self.table_name = 'friends'
   belongs_to :user
 end
 
-describe TinyORM::Query::Base do
+describe TinyORM::Query::Get do
   def sanitize(sql)
     sql.gsub(/\s+/, ' ').strip
   end
 
-  let(:base) { described_class.new(TinyORM::Query::Container.new(User)) }
+  let(:get) { described_class.new(TinyORM::Query::Get::Container.new(User)) }
 
   it do
     sql = <<SQL
@@ -34,7 +30,7 @@ describe TinyORM::Query::Base do
 SQL
 
     expect(
-      base.select('AVG(weight)', :height)
+      get.select('AVG(weight)', :height)
           .where(:age => 12).and('weight > 40')
           .group(:height)
           .having('height > 150')
@@ -53,7 +49,7 @@ SQL
 SQL
 
     expect(
-        base.select('friends.age', 'friends.name')
+        get.select('friends.age', 'friends.name')
             .join(:friends)
             .where(id: 1).and('friends.age > 15').to_sql
     ).to eq(sanitize(sql))

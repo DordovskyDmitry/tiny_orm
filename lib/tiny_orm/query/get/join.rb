@@ -1,6 +1,6 @@
 module TinyORM
   module Query
-    class Join < Base
+    class Join < Get
       attr_reader :type
 
       def set(*value)
