@@ -1,7 +1,7 @@
 module TinyORM
   module Query
     class Get
-      class Container
+      class Builder
         attr_reader :model
         attr_accessor :select, :where, :join, :order, :limit, :offset, :group, :having
 

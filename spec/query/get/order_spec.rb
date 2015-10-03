@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe TinyORM::Query::Order do
 
-  let(:order) { described_class.new(TinyORM::Query::Get::Container.new(Model.new('users'))) }
+  let(:order) { described_class.new(TinyORM::Query::Get::Builder.new(Model.new('users'))) }
 
   it { expect(order.set(:price).compile!).to eq('users.price') }
   it { expect(order.set('price ASC, popularity DESC').compile!).to eq('price ASC, popularity DESC') }

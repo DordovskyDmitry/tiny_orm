@@ -15,7 +15,7 @@ describe TinyORM::Query::Get do
     sql.gsub(/\s+/, ' ').strip
   end
 
-  let(:get) { described_class.new(TinyORM::Query::Get::Container.new(User)) }
+  let(:get) { described_class.new(TinyORM::Query::Get::Builder.new(User)) }
 
   it do
     sql = <<SQL

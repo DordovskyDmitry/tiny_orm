@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe TinyORM::Query::Group do
 
-  let(:group) { described_class.new(TinyORM::Query::Get::Container.new(Model.new('users'))) }
+  let(:group) { described_class.new(TinyORM::Query::Get::Builder.new(Model.new('users'))) }
 
   it { expect(group.set(:price).compile!).to eq('users.price') }
   it { expect(group.set('price, size').compile!).to eq('price, size') }
