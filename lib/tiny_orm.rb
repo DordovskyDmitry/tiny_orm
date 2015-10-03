@@ -12,8 +12,31 @@ module TinyORM
       base.send(:include, TinyORM::Association)
     end
 
+    def initialize(options)
+      @attributes = options
+      assign(options)
+    end
+
+    def self.create(options)
+      self.new(options).save
+      self
+    end
+
+    def assign(options)
+      options.each { |k, v| self.send("#{k}=", v) }
+      self
+    end
+
     def update(options)
       assign(options).save
+    end
+
+    def save
+      if new_record?
+        self.class.insert(@attributes)
+      else
+        self.class.update({id: self.id}, @attributes)
+      end
     end
 
     def self.respond_to_missing?(name, include_private = false)
