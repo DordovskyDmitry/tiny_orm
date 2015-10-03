@@ -12,6 +12,10 @@ module TinyORM
       base.send(:include, TinyORM::Association)
     end
 
+    def update(options)
+      assign(options).save
+    end
+
     def self.respond_to_missing?(name, include_private = false)
       TinyORM::Query::Base.new(self).respond_to?(name) || super
     end

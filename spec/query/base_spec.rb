@@ -21,4 +21,5 @@ describe TinyORM::Query::Base do
   it { expect { User.order(name: :desc) }.to_not raise_error}
   it { expect { User.limit(10) }.to_not raise_error}
   it { expect { User.offset(10) }.to_not raise_error}
+  it { expect { User.update('age > 12',name: 'John') }.to_not raise_error}
 end
