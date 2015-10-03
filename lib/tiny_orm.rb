@@ -1,5 +1,6 @@
 require 'tiny_orm/version'
 require 'tiny_orm/query/get/get'
+require 'tiny_orm/query/get/condition'
 Dir[File.dirname(__FILE__) + '/tiny_orm/**/**/*.rb'].each { |file| require file }
 
 module TinyORM

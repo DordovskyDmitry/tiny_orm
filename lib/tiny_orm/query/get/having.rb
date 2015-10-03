@@ -1,9 +1,8 @@
 module TinyORM
   module Query
-    class Having < Where
+    class Having < Condition
       def initialize(query)
-        @conditions = []
-        @query = query
+        super
         @query.having << self
       end
     end
