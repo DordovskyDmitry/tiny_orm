@@ -13,6 +13,10 @@ module TinyORM
         end
       end
 
+      def update(conditions, attributes)
+        where(conditions).update(attributes)
+      end
+
       private
 
       def build_get_query
