@@ -5,7 +5,7 @@ module TinyORM
 
       def initialize(owner, target, options = {})
         @owner = owner
-        @target = options[:class_name] || camelize(target)
+        @target = options[:class_name] || to_class_name(target)
         @internal_key = options[:internal_key]
         @external_key = options[:external_key]
       end
@@ -15,13 +15,13 @@ module TinyORM
       end
 
       def target
-        Object.const_get(@target)
+        @target.constantize
       end
 
       private
 
-      def camelize(str)
-        str.to_s.split('_').each{|s| s.extend(TinyORM::PluralSingularString) }.map(&:singularize).map(&:capitalize).join
+      def to_class_name(str)
+        str.to_s.camelize.singularize
       end
     end
   end

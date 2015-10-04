@@ -1,8 +1,6 @@
-require_relative 'spec_helper'
+require_relative '../spec_helper'
 
-String.send(:include, TinyORM::PluralSingularString) # Unfortunately using refinements broke using transform_using
-
-describe TinyORM::PluralSingularString do
+describe TinyORM::PluralSingular do
 
   describe 'pluralize' do
     context 'from general singular forms' do

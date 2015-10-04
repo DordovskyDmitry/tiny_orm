@@ -1,5 +1,5 @@
 module TinyORM
-  module PluralSingularString
+  module PluralSingular
 
     # Rules was stolen from inflector gem
     PLURALIZE_RULES = {

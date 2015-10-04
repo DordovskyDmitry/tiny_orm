@@ -1,4 +1,5 @@
 require 'tiny_orm/version'
+require 'tiny_orm/extension/plural_singular'
 require 'tiny_orm/query/get/get'
 require 'tiny_orm/query/get/condition'
 Dir[File.dirname(__FILE__) + '/tiny_orm/**/**/*.rb'].each { |file| require file }
@@ -13,11 +14,7 @@ module TinyORM
     end
 
     def self.table_name
-      @table_name ||=  begin
-                         model_name = self.to_s.scan(/[A-Z]+[a-z]*/).map(&:downcase).join('_')
-                         model_name.extend(TinyORM::PluralSingularString)
-                         model_name.pluralize
-      end
+      @table_name ||= self.to_s.underscore.pluralize
     end
 
     def self.respond_to_missing?(name, include_private = false)

@@ -20,7 +20,7 @@ module TinyORM
       end
 
       def ligament_to_target
-        through_model = Object.const_get(camelize(@through))
+        through_model = to_class_name(@through).constantize
         through_model.associations[@target.to_s.downcase.to_sym] ||
             HasMany.new(through_model, nil, class_name: @target, internal_key: "#{@target.to_s.downcase}_id", external_key: @external_key)
       end

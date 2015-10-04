@@ -11,11 +11,9 @@ module TinyORM
 
       %w(has_many has_one belongs_to).each do |method|
         define_method method do |target, options = {}|
-          target_type = method.split('_').map(&:capitalize).join
-          association = Object.const_get("TinyORM::Association::#{target_type}").new(self, target, options)
           #TODO association.define_methods
           @associations ||= {}
-          @associations[target] = association
+          @associations[target] = "TinyORM::Association::#{method.camelize}".constantize.new(self, target, options)
         end
       end
     end

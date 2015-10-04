@@ -3,13 +3,13 @@ module TinyORM
     class Base < Struct.new(:model)
       %w(where having).each do |method|
         define_method method do |options = {}|
-          Object.const_get("TinyORM::Query::#{method.capitalize}").new(build_get_query).send(method, options)
+          query_object(method).send(method, options)
         end
       end
 
       %w(select join group order limit offset).each do |method|
         define_method method do |*value|
-          Object.const_get("TinyORM::Query::#{method.capitalize}").new(build_get_query).send(method, *value)
+          query_object(method).send(method, *value)
         end
       end
 
@@ -26,6 +26,10 @@ module TinyORM
       end
 
       private
+
+      def query_object(method)
+        "TinyORM::Query::#{method.capitalize}".constantize.new(build_get_query)
+      end
 
       def build_get_query
         TinyORM::Query::Get::Builder.new(model)

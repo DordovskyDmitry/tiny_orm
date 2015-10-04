@@ -8,7 +8,7 @@ module TinyORM
 
       %w(not and or like).each do |method|
         define_method method do |options|
-          @conditions << Object.const_get("TinyORM::Query::#{method.capitalize}").new(@query.table_name, options)
+          @conditions << "TinyORM::Query::#{method.capitalize}".constantize.new(@query.table_name, options)
           self
         end
       end
