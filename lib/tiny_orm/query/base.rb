@@ -21,6 +21,10 @@ module TinyORM
         Insert.new(model, options).execute
       end
 
+      def delete(conditions)
+        where(conditions).delete
+      end
+
       private
 
       def build_get_query

@@ -66,6 +66,10 @@ describe TinyORM::Query::Where do
     it { expect { where.like(name: 'john').update(name: 'johny') }.to_not raise_error }
   end
 
+  context 'delete' do
+    it { expect { where.like(name: 'john').delete }.to_not raise_error }
+  end
+
   context 'mix' do
     it { expect(where.and(name: 'john').or(email: 'john@gmail.com').compile!).to eq("(users.name = 'john') OR (users.email = 'john@gmail.com')") }
     it { expect(where.and(name: 'john').or(email: 'john@gmail.com').not(age: 20).compile!).to eq("(users.name = 'john') OR (users.email = 'john@gmail.com') AND NOT(users.age = 20)") }

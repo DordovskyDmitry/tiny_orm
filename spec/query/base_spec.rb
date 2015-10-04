@@ -23,4 +23,5 @@ describe TinyORM::Query::Base do
   it { expect { User.offset(10) }.to_not raise_error}
   it { expect { User.update('age > 12',name: 'John') }.to_not raise_error}
   it { expect { User.insert(name: 'John') }.to_not raise_error}
+  it { expect { User.delete(name: 'John') }.to_not raise_error}
 end

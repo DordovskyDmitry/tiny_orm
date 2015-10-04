@@ -9,6 +9,10 @@ module TinyORM
       def update(attributes)
         Update.new(@query.model, @query.where, attributes).execute
       end
+
+      def delete
+        Delete.new(@query.model, @query.where).execute
+      end
     end
   end
 end
