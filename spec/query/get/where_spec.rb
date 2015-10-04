@@ -2,7 +2,7 @@ require_relative '../../spec_helper'
 
 describe TinyORM::Query::Where do
 
-  let(:where) { described_class.new(TinyORM::Query::Get::Builder.new(Model.new('users'))) }
+  let(:where) { described_class.new(TinyORM::Query::Get::Builder.new(User)) }
 
   context 'and' do
     it { expect(where.and(name: 'john').compile!).to eq("(users.name = 'john')") }
@@ -77,7 +77,7 @@ describe TinyORM::Query::Where do
   end
 
   context 'object as argument' do
-    let(:subwhere) { TinyORM::Query::Where.new(TinyORM::Query::Get::Builder.new(Model.new('books'))) }
+    let(:subwhere) { TinyORM::Query::Where.new(TinyORM::Query::Get::Builder.new(Book)) }
 
     it { expect(where.and(subwhere.and(name: 'john')).compile!).to eq("(books.name = 'john')") }
     it { expect(where.and(name: 'sam').or(subwhere.and(name: 'john').or(name: 'bob')).compile!).to eq("(users.name = 'sam') OR (books.name = 'john') OR (books.name = 'bob')") }

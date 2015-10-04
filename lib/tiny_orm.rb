@@ -7,9 +7,17 @@ module TinyORM
   class Base
     def self.inherited(base)
       class << base
-        attr_accessor :table_name
+        attr_writer :table_name
       end
       base.send(:include, TinyORM::Association)
+    end
+
+    def self.table_name
+      @table_name ||=  begin
+                         model_name = self.to_s.scan(/[A-Z]+[a-z]*/).map(&:downcase).join('_')
+                         model_name.extend(TinyORM::PluralSingularString)
+                         model_name.pluralize
+      end
     end
 
     def self.respond_to_missing?(name, include_private = false)

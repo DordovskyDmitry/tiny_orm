@@ -1,15 +1,5 @@
 require_relative '../../spec_helper'
 
-class User < TinyORM::Base
-  self.table_name = 'users'
-  has_many :friends
-end
-
-class Friend < TinyORM::Base
-  self.table_name = 'friends'
-  belongs_to :user
-end
-
 describe TinyORM::Query::Get do
   def sanitize(sql)
     sql.gsub(/\s+/, ' ').strip
@@ -42,16 +32,16 @@ SQL
 
   it do
     sql = <<SQL
-              SELECT friends.age, friends.name
+              SELECT not_enemies.age, not_enemies.name
               FROM users
-              INNER JOIN friends ON users.id = friends.user_id
-              WHERE (users.id = 1) AND (friends.age > 15)
+              INNER JOIN not_enemies ON users.id = not_enemies.user_id
+              WHERE (users.id = 1) AND (not_enemies.age > 15)
 SQL
 
     expect(
-        get.select('friends.age', 'friends.name')
+        get.select('not_enemies.age', 'not_enemies.name')
             .join(:friends)
-            .where(id: 1).and('friends.age > 15').to_sql
+            .where(id: 1).and('not_enemies.age > 15').to_sql
     ).to eq(sanitize(sql))
   end
 

@@ -1,15 +1,5 @@
 require_relative '../spec_helper'
 
-class User < TinyORM::Base
-  self.table_name = 'users'
-  has_many :friends
-end
-
-class Friend < TinyORM::Base
-  self.table_name = 'friends'
-  belongs_to :user
-end
-
 describe TinyORM::Query::Base do
   let(:base) { described_class.new(User) }
 

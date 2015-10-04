@@ -1,33 +1,5 @@
 require_relative '../../spec_helper'
 
-class Photo < TinyORM::Base
-  self.table_name = 'photos'
-  belongs_to :profile
-end
-
-class AuthorBook < TinyORM::Base
-  self.table_name = 'author_books'
-  has_many :books
-end
-
-class Author < TinyORM::Base
-  self.table_name = 'authors'
-  has_one :profile
-  has_many :books, through: :author_books
-end
-
-class Profile < TinyORM::Base
-  self.table_name = 'profiles'
-  belongs_to :author
-  has_many :photos
-end
-
-class Book < TinyORM::Base
-  self.table_name = 'books'
-  has_many :author_books
-  has_many :authors, through: :author_books
-end
-
 describe TinyORM::Query::Join do
 
   let(:join) { described_class.new(TinyORM::Query::Get::Builder.new(Author)) }
