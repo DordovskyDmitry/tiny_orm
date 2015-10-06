@@ -6,9 +6,9 @@ require 'tiny_orm/version'
 Gem::Specification.new do |spec|
   spec.name          = "tiny_orm"
   spec.version       = TinyORM::VERSION
-  spec.authors       = ["dd"]
+  spec.authors       = ['Dmytro Dordovskyi']
   spec.email         = ["dordovskydmitry@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.summary       = %q{Ruby ORM.}
   spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
