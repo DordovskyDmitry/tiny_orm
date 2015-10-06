@@ -31,6 +31,12 @@ RSpec.configure do |config|
   class Book < TinyORM::Base
     has_many :author_books
     has_many :authors, through: :author_books
+    belongs_to :publisher
+    has_many :readers, class_name: 'User'
+  end
+
+  class Publisher < TinyORM::Base
+    has_many :books
   end
 
   class User < TinyORM::Base

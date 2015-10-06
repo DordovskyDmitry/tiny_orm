@@ -31,14 +31,14 @@ module TinyORM
       end
 
       def hash_expression(model, associations)
-        associations.keys.reduce('') do |agg, key|
+        associations.keys.reduce([]) do |agg, key|
           key_model = model.associations(key).target
-          agg << simple_expression(model, key) << ' ' << complex_expression(key_model, associations[key])
-        end
+          agg << simple_expression(model, key) << complex_expression(key_model, associations[key])
+        end.join(' ')
       end
 
       def array_expression(model, associations)
-        associations.reduce('') { |agg, key| agg << simple_expression(model, key) }
+        associations.reduce([]) { |agg, key| agg << complex_expression(model, key) }.join(' ')
       end
 
       def simple_expression(k, v)
