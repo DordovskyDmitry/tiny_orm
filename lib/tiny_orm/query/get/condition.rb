@@ -42,12 +42,19 @@ module TinyORM
 
       def combine(delimiter = '=')
         options.map do |k, v|
-          if v.nil?
-            "#{table_name}.#{k} IS NULL"
-          elsif v.is_a?(String)
-            "#{table_name}.#{k} #{delimiter} '#{v}'"
-          else
-            "#{table_name}.#{k} #{delimiter} #{v}"
+          case v
+            when nil
+              "#{table_name}.#{k} IS NULL"
+            when String
+              "#{table_name}.#{k} #{delimiter} '#{v}'"
+            when Array
+              v_str = v.first.is_a?(Numeric) ? v : v.map{|item| "'#{item}'"}
+              "#{table_name}.#{k} IN (#{v_str.join(', ')})"
+            when Range
+              first, last = v.begin.is_a?(Numeric) ? [v.begin, v.end] : %W('#{v.begin}' '#{v.end}')
+              "#{table_name}.#{k} BETWEEN #{first} AND #{last}"
+            else
+              "#{table_name}.#{k} #{delimiter} #{v}"
           end
         end.join(' AND ')
       end

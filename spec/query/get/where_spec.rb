@@ -8,6 +8,9 @@ describe TinyORM::Query::Where do
     it { expect(where.and(name: 'john').compile!).to eq("(users.name = 'john')") }
     it { expect(where.and(name: 'john', email: 'john@gmail.com').compile!).to eq("(users.name = 'john' AND users.email = 'john@gmail.com')") }
     it { expect(where.and(name: 'john').and(email: 'john@gmail.com').compile!).to eq("(users.name = 'john') AND (users.email = 'john@gmail.com')") }
+    it { expect(where.and(name: %w(john bob sam)).compile!).to eq("(users.name IN ('john', 'bob', 'sam'))") }
+    it { expect(where.and(age: 12..14).compile!).to eq('(users.age BETWEEN 12 AND 14)') }
+    it { expect(where.and(age: Date.new(2015, 10, 7).prev_day..Date.new(2015, 10, 7)).compile!).to eq("(users.age BETWEEN '2015-10-06' AND '2015-10-07')") }
 
     context 'nil' do
       it { expect(where.and(name: nil, email: 'john@gmail.com').compile!).to eq("(users.name IS NULL AND users.email = 'john@gmail.com')") }
